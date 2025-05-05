@@ -57,7 +57,25 @@ public class IPv4GUI extends JFrame {
 		gbc.gridy = 5;
 		gbc.gridwidth = 2;
 		add(calcular, gbc);
+
+		// Ação do botão com clique normal
 		calcular.addActionListener(e -> calcularResultado());
+
+		// Atalho de teclado: Ctrl + L
+		Action calcularAction = new AbstractAction() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        calcular.doClick(); // Simula clique no botão
+		    }
+		};
+
+		InputMap inputMap = calcular.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		ActionMap actionMap = calcular.getActionMap();
+
+		KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK);
+		inputMap.put(keyStroke, "calcularComCtrlL");
+		actionMap.put("calcularComCtrlL", calcularAction);
+
 
 		// Resultados
 		String[] labels = { "IP:", "Classe:", "Máscara Decimal:", "Máscara Binária:", "Nº Hosts:", "Nº Sub-redes:" };
