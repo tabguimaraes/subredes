@@ -60,6 +60,21 @@ public class IPv4GUI extends JFrame {
 
         calcular.addActionListener(e -> calcularResultado());
 
+        // Atalho de teclado: Ctrl + L
+        Action calcularAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calcular.doClick(); // Simula clique no botão
+            }
+        };
+
+        KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK);
+        InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = getRootPane().getActionMap();
+
+        inputMap.put(keyStroke, "calcularComCtrlL");
+        actionMap.put("calcularComCtrlL", calcularAction);
+
         // Resultados
         String[] labels = { "IP:", "Classe:", "Máscara Decimal:", "Máscara Binária:", "Nº Hosts:", "Nº Sub-redes:" };
         JLabel[] outputs = { resultadoIP, resultadoClasse, resultadoMascaraDecimal, resultadoMascaraBinario,
@@ -81,7 +96,7 @@ public class IPv4GUI extends JFrame {
         tituloErro.setForeground(Color.RED);
         add(tituloErro, gbc);
 
-        setSize(450, 400);
+        setSize(380, 400);
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -127,5 +142,9 @@ public class IPv4GUI extends JFrame {
         resultadoMascaraBinario.setText("");
         resultadoHosts.setText("");
         resultadoRedes.setText("");
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new IPv4GUI());
     }
 }
